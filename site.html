@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Força Máxima - CrossFit Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --text-light: #FFFFFF;
+            --accent-red: #E50914;
+            --accent-yellow: #FFCC00;
+            --secondary-gray: #333333;
+            --card-bg: #1E1E1E;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--text-light);
+        }
+
+        .btn-primary:hover {
+            background-color: #c40812;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-gray);
+            color: var(--text-light);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #2a2a2a;
+            transform: translateY(-2px);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .section-title span {
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-red);
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(18, 18, 18, 0.95);
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            color: var(--text-light);
+        }
+        
+        .logo span {
+            color: var(--accent-red);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-red);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-red);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .header-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--text-light);
+        }
+        
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            animation: pulse 2s infinite;
+        }
+        
+        .whatsapp-float i {
+            color: white;
+            font-size: 30px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            margin: 0 auto;
+        }
+        
+        .hero-content h2 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        /* About Section */
+        .about {
+            background-color: var(--bg-dark);
+        }
+        
+        .about-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--accent-yellow);
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .about-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-item h4 {
+            font-size: 36px;
+            color: var(--accent-red);
+            margin-bottom: 5px;
+        }
+        
+        .stat-item p {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .about-images {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .about-img {
+            height: 250px;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        .about-img:first-child {
+            grid-column: span 2;
+            height: 300px;
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .benefits::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-yellow));
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .benefit-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-bottom: 3px solid var(--accent-red);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, var(--accent-red), #c40812);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .benefit-icon i {
+            font-size: 30px;
+            color: var(--text-light);
+        }
+        
+        .benefit-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--accent-yellow);
+        }
+        
+        .benefit-card p {
+            line-height: 1.6;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            background-color: var(--bg-dark);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background-color: var(--card-bg);
+            border-radius: 5px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid #333;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-red);
+        }
+        
+        .pricing-header {
+            background-color: var(--secondary-gray);
+            padding: 25px;
+        }
+        
+        .pricing-card.featured .pricing-header {
+            background: linear-gradient(45deg, var(--accent-red), #c40812);
+        }
+        
+        .pricing-header h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-price {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-yellow);
+            margin-bottom: 5px;
+        }
+        
+        .pricing-price span {
+            font-size: 16px;
+            color: #aaa;
+        }
+        
+        .pricing-features {
+            padding: 30px;
+        }
+        
+        .pricing-features ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features ul li {
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .pricing-features ul li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Trainers Section */
+        .trainers {
+            background: linear-gradient(to bottom, #0d0d0d, #1a1a1a);
+        }
+        
+        .trainers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .trainer-card {
+            background-color: var(--card-bg);
+            border-radius: 5px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .trainer-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .trainer-img {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .trainer-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .trainer-card:hover .trainer-img img {
+            transform: scale(1.1);
+        }
+        
+        .trainer-info {
+            padding: 25px;
+        }
+        
+        .trainer-info h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .trainer-info .specialty {
+            color: var(--accent-yellow);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .trainer-info .experience {
+            background-color: var(--accent-red);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .trainer-info p {
+            font-style: italic;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            background-color: var(--bg-dark);
+        }
+        
+        .testimonials-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial-slide {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 0 20px;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 30px;
+            font-size: 18px;
+            line-height: 1.8;
+            position: relative;
+        }
+        
+        .testimonial-content::before,
+        .testimonial-content::after {
+            content: '"';
+            font-size: 60px;
+            color: var(--accent-red);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .testimonial-content::before {
+            top: -20px;
+            left: -15px;
+        }
+        
+        .testimonial-content::after {
+            bottom: -40px;
+            right: -15px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .author-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            border: 3px solid var(--accent-yellow);
+        }
+        
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .author-info .stars {
+            color: var(--accent-yellow);
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);
+            padding-bottom: 50px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            height: 250px;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(229, 9, 20, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-overlay i {
+            font-size: 40px;
+            color: white;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background-color: var(--bg-dark);
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+        
+        .contact-form {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 5px;
+        }
+        
+        .contact-form h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--accent-yellow);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #222;
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-info h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--accent-yellow);
+        }
+        
+        .contact-map {
+            height: 300px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .contact-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .contact-details {
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0d0d0d;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 50px;
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #aaa;
+        }
+        
+        .footer-links h4,
+        .footer-social h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h4::after,
+        .footer-social h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-red);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links ul li a:hover {
+            color: var(--accent-red);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #222;
+            border-radius: 50%;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent-red);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #222;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-content h2 {
+                font-size: 50px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-images {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: rgba(18, 18, 18, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                transition: left 0.3s ease;
+            }
+            
+            nav ul.active {
+                left: 0;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .hero-content h2 {
+                font-size: 40px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .section-title h2 {
+                font-size: 30px;
+            }
+            
+            .stat-item h4 {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-content h2 {
+                font-size: 32px;
+            }
+            
+            .hero-content p {
+                font-size: 16px;
+            }
+            
+            .about-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/5519974078282?text=Olá! Vi o site e quero saber mais sobre os planos." class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>FORÇA <span>MÁXIMA</span></h1>
+            </div>
+            
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#benefits">Benefícios</a></li>
+                    <li><a href="#pricing">Planos</a></li>
+                    <li><a href="#trainers">Instrutores</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-buttons">
+                <a href="#contact" class="btn btn-primary">Agendar aula grátis</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Transforme seu corpo. Supere seus limites.</h2>
+                <p>Descubra sua verdadeira força com treinos de alta intensidade e uma comunidade que te impulsiona além do que você imaginava ser possível.</p>
+                <div class="hero-buttons">
+                    <a href="#pricing" class="btn btn-primary">Comece agora</a>
+                    <a href="#contact" class="btn btn-secondary">Teste uma aula grátis</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Sobre Nossa Academia</h2>
+                <span></span>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Mais que um treino, um estilo de vida</h3>
+                    <p>Na Força Máxima, não somos apenas uma academia de CrossFit. Somos uma comunidade de pessoas apaixonadas por superar limites e alcançar o melhor de si mesmas. Nossa missão é transformar vidas através do esporte, promovendo saúde, bem-estar e conexões genuínas.</p>
+                    <p>Com metodologia baseada nos fundamentos do CrossFit, nossos treinos são constantemente variados, funcionais e de alta intensidade, adaptados para todos os níveis de condicionamento físico.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <h4>300+</h4>
+                            <p>Alunos</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>5</h4>
+                            <p>Anos de experiência</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>15</h4>
+                            <p>Instrutores</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-images">
+                    <div class="about-img">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Academia de CrossFit">
+                    </div>
+                    <div class="about-img">
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Treino de CrossFit">
+                    </div>
+                    <div class="about-img">
+                        <img src="https://images.unsplash.com/photo-1517343985841-f8b2d66e010b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Equipamentos de CrossFit">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <div class="section-title">
+                <h2>Benefícios do CrossFit</h2>
+                <span></span>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Emagrecimento Rápido</h3>
+                    <p>Queime até 1.000 calorias por aula com treinos de alta intensidade que aceleram seu metabolismo por horas após o exercício.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3>Força e Resistência</h3>
+                    <p>Desenvolva força muscular, resistência cardiovascular e respiratória com movimentos funcionais variados.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Comunidade Engajada</h3>
+                    <p>Faça parte de um grupo motivador que celebra cada conquista e apoia nos desafios, criando laços que vão além da academia.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Saúde Integral</h3>
+                    <p>Melhore sua composição corporal, postura, flexibilidade e saúde geral com treinos completos e orientação profissional.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Planos e Preços</h2>
+                <span></span>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Básico</h3>
+                        <div class="pricing-price">R$ 199<span>/mês</span></div>
+                        <p>Ideal para iniciantes</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li>3 dias por semana</li>
+                            <li>Aulas em grupo</li>
+                            <li>Acesso a todos os equipamentos</li>
+                            <li>Avaliação física inicial</li>
+                            <li>Suporte básico de coaches</li>
+                        </ul>
+                        <a href="https://wa.me/5519974078282?text=Olá! Estou interessado no Plano Básico." class="btn btn-secondary">Quero este plano</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-header">
+                        <h3>Intermediário</h3>
+                        <div class="pricing-price">R$ 259<span>/mês</span></div>
+                        <p>Mais popular</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li>5 dias por semana</li>
+                            <li>Aulas em grupo</li>
+                            <li>Acesso ilimitado</li>
+                            <li>Avaliação física trimestral</li>
+                            <li>Suporte avançado de coaches</li>
+                            <li>Acesso a workshops mensais</li>
+                        </ul>
+                        <a href="https://wa.me/5519974078282?text=Olá! Estou interessado no Plano Intermediário." class="btn btn-primary">Quero este plano</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Ilimitado</h3>
+                        <div class="pricing-price">R$ 349<span>/mês</span></div>
+                        <p>Para atletas dedicados</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li>Acesso ilimitado 7 dias</li>
+                            <li>Aulas em grupo e Open Gym</li>
+                            <li>Aulas especiais de mobilidade</li>
+                            <li>Avaliação física mensal</li>
+                            <li>Planejamento individualizado</li>
+                            <li>Nutrição esportiva (consultoria)</li>
+                        </ul>
+                        <a href="https://wa.me/5519974078282?text=Olá! Estou interessado no Plano Ilimitado." class="btn btn-secondary">Quero este plano</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trainers Section -->
+    <section class="trainers" id="trainers">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nossos Instrutores</h2>
+                <span></span>
+            </div>
+            
+            <div class="trainers-grid">
+                <div class="trainer-card">
+                    <div class="trainer-img">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Instrutor">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Carlos Mendes</h3>
+                        <span class="specialty">LPO e Ginástica</span>
+                        <span class="experience">8 anos de experiência</span>
+                        <p>"Meu objetivo é ajudar cada aluno a descobrir sua força interior e superar seus próprios limites."</p>
+                    </div>
+                </div>
+                
+                <div class="trainer-card">
+                    <div class="trainer-img">
+                        <img src="https://images.unsplash.com/photo-1549060279-7e168fce7090?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Instrutora">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Fernanda Lima</h3>
+                        <span class="specialty">Condicionamento e HIIT</span>
+                        <span class="experience">6 anos de experiência</span>
+                        <p>"Acredito que a verdadeira transformação começa quando saímos da nossa zona de conforto."</p>
+                    </div>
+                </div>
+                
+                <div class="trainer-card">
+                    <div class="trainer-img">
+                        <img src="https://images.unsplash.com/photo-1549060279-7e168fce7090?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Instrutor">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Ricardo Souza</h3>
+                        <span class="specialty">Mobilidade e Recuperação</span>
+                        <span class="experience">10 anos de experiência</span>
+                        <p>"O equilíbrio entre esforço e recuperação é essencial para o progresso sustentável."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Depoimentos</h2>
+                <span></span>
+            </div>
+            
+            <div class="testimonials-container">
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>Em apenas 6 meses na Força Máxima, perdi 18kg e ganhei uma disposição que não tinha há anos. A equipe de coaches é incrível e a comunidade me motiva todos os dias!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Depoimento">
+                        </div>
+                        <div class="author-info">
+                            <h4>Juliana Santos</h4>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>Galeria de Fotos</h2>
+                <span></span>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Treino CrossFit">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Academia">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1517343985841-f8b2d66e010b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Equipamentos">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1549060279-7e168fce7090?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Treino em grupo">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Competição">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Evento">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contato e Localização</h2>
+                <span></span>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-form">
+                    <h3>Agende sua aula experimental</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Nome Completo</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefone</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensagem</label>
+                            <textarea id="message" placeholder="Quero agendar uma aula experimental..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Onde estamos</h3>
+                    <div class="contact-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.097417919286!2d-46.65390548502185!3d-23.56516118468105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1687747688547!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Endereço</h4>
+                                <p>Av. Paulista, 1000 - São Paulo, SP</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <h4>Telefone</h4>
+                                <p>(11) 99999-9999</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>E-mail</h4>
+                                <p>contato@forcamaxima.com.br
